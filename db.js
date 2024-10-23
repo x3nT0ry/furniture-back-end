@@ -1,20 +1,24 @@
-// /db/index.js
+// db.js
 const mysql = require("mysql");
 
-const db = mysql.createConnection({
+const pool = mysql.createPool({
+    connectionLimit: 10, // Максимальное количество соединений
     host: "localhost",
     user: "wpadmin",
     password: "351221",
     database: "furniture",
 });
 
-// Connect to the database
-db.connect((err) => {
-    if (err) {
-        console.error("Database connection failed:", err.stack);
-        return;
-    }
-    console.log("Connected to the database.");
-});
+// Функция для выполнения запросов
+const query = (sql, values) => {
+    return new Promise((resolve, reject) => {
+        pool.query(sql, values, (error, results) => {
+            if (error) {
+                return reject(error); // Если есть ошибка, отклоняем промис
+            }
+            resolve(results); // Если все хорошо, резолвим промис с результатами
+        });
+    });
+};
 
-module.exports = db; // Export the connection for use in other files
+module.exports = { query }; // Экспортируем функцию для использования в других файлах

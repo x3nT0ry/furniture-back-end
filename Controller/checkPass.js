@@ -1,31 +1,33 @@
+// checkPass.js
 const express = require('express');
 const router = express.Router();
-const mysql = require('mysql');
 const bcrypt = require('bcrypt');
-const db = require('../db'); // Your database connection
+const db = require('../db'); // Подключаемся к базе данных
 
-// Endpoint to check login credentials
+// Endpoint для проверки учетных данных
 router.post('/checkpass', async (req, res) => {
     const { login, password } = req.body;
+
+    const queryStr = 'SELECT * FROM admin_account WHERE login = ?';
     
-    // Query to get the user by login
-    const query = 'SELECT * FROM admin_account WHERE login = ?';
-    db.query(query, [login], async (error, results) => {
-        if (error) {
-            return res.status(500).json({ success: false, message: 'Server error' });
-        }
+    try {
+        const results = await db.query(queryStr, [login]);
+        
         if (results.length > 0) {
-            // Compare the entered password with the hashed password
+            // Сравниваем введенный пароль с захэшированным паролем
             const match = await bcrypt.compare(password, results[0].password);
             if (match) {
                 return res.json({ success: true });
             } else {
-                return res.json({ success: false, message: 'Invalid password' });
+                return res.json({ success: false, message: 'Неверный пароль' });
             }
         } else {
-            return res.json({ success: false, message: 'User not found' });
+            return res.json({ success: false, message: 'Пользователь не найден' });
         }
-    });
+    } catch (error) {
+        console.error('Ошибка сервера:', error);
+        return res.status(500).json({ success: false, message: 'Ошибка сервера' });
+    }
 });
 
 module.exports = router;

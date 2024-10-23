@@ -1,37 +1,34 @@
+// registr.js
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
-const db = require('../db'); // Your database connection
+const db = require('../db'); // Подключаемся к базе данных
 
-// Endpoint to register a new user
+// Endpoint для регистрации нового пользователя
 router.post('/register', async (req, res) => {
     const { login, password } = req.body;
 
-    // Check if the login already exists
+    // Проверяем, существует ли уже логин
     const checkQuery = 'SELECT * FROM admin_account WHERE login = ?';
-    db.query(checkQuery, [login], async (error, results) => {
-        if (error) {
-            console.error('Error checking user:', error);
-            return res.status(500).json({ success: false, message: 'Error checking user' });
-        }
+    
+    try {
+        const results = await db.query(checkQuery, [login]);
 
         if (results.length > 0) {
-            // User already exists
+            // Пользователь уже существует
             return res.json({ success: false, message: 'Користувач вже зареєстрований' });
         }
 
-        // Hash the password
+        // Хэшируем пароль
         const hashedPassword = await bcrypt.hash(password, 10);
-
-        const query = 'INSERT INTO admin_account (login, password) VALUES (?, ?)';
-        db.query(query, [login, hashedPassword], (error, results) => {
-            if (error) {
-                console.error('Error saving user:', error);
-                return res.status(500).json({ success: false, message: 'Error saving user' });
-            }
-            res.json({ success: true });
-        });
-    });
+        const insertQuery = 'INSERT INTO admin_account (login, password) VALUES (?, ?)';
+        
+        await db.query(insertQuery, [login, hashedPassword]);
+        res.json({ success: true });
+    } catch (error) {
+        console.error('Ошибка сохранения пользователя:', error);
+        return res.status(500).json({ success: false, message: 'Ошибка сохранения пользователя' });
+    }
 });
 
 module.exports = router;
