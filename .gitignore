@@ -1,0 +1,16 @@
+# Node modules
+node_modules/
+
+# Логи
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Директории с временными файлами
+.tmp/
+.dist/
+.build/
+
+# Операционные системы
+.DS_Store
+Thumbs.db
