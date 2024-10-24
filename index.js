@@ -1,14 +1,17 @@
 const express = require('express');
-const cors = require('cors'); // Import CORS
-const conn = require('./db'); // Your database connection file
+const cors = require('cors');
 const app = express();
 
-app.use(cors()); // Enable CORS for all routes
-app.use(express.json()); // Middleware for parsing JSON bodies
-app.use('/api', require('./Controller/checkPass')); // Use the checkPass routes
-app.use('/api', require('./Controller/registr')); // Use the registration routes
+app.use(cors());
+app.use(express.json());
 
-
+app.use('/api', require('./Controller/Auth/checkPass')); 
+app.use('/api', require('./Controller/Auth/registr')); 
+app.use('/api', require('./Controller/Requestion/request'));
+app.use('/api', require('./Controller/Requestion/outRequest')); 
+app.use('/api', require('./Controller/Requestion/outDatailRequest')); 
+app.use('/api', require('./Controller/Requestion/newState')); 
+app.use('/api', require('./Controller/Requestion/delete')); 
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {

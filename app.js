@@ -1,14 +1,13 @@
 const mysql = require('mysql');
 
-// Создаем подключение к базе данных
 const conn = mysql.createConnection({
-    host: "127.0.0.1",   // правильный параметр для хоста
-    user: "wpadmin",     // пользователь базы данных
-    database: "furniture",  // имя базы данных
-    password: "351221"   // пароль пользователя
+    host: "127.0.0.1",   
+    user: "wpadmin",    
+    database: "furniture",  
+    password: "351221"   
 });
 
-// Подключаемся к базе данных
+
 conn.connect(err => {
     if (err) {
         console.log('Error connecting to database:', err);

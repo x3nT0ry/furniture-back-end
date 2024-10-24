@@ -1,10 +1,8 @@
-// checkPass.js
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
-const db = require('../db'); // Подключаемся к базе данных
+const db = require('../../db'); 
 
-// Endpoint для проверки учетных данных
 router.post('/checkpass', async (req, res) => {
     const { login, password } = req.body;
 
@@ -14,7 +12,6 @@ router.post('/checkpass', async (req, res) => {
         const results = await db.query(queryStr, [login]);
         
         if (results.length > 0) {
-            // Сравниваем введенный пароль с захэшированным паролем
             const match = await bcrypt.compare(password, results[0].password);
             if (match) {
                 return res.json({ success: true });
