@@ -1,9 +1,21 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
+const path = require('path'); 
 
 app.use(cors());
 app.use(express.json());
+
+
+app.use('/images/slider', express.static(path.join(__dirname, 'image/slider')));
+
+app.use('/api', require('./Controller/Sliders/outSlider'));
+app.use('/api', require('./Controller/Sliders/sliderInput'));
+app.use('/api', require('./Controller/Sliders/addSlider'));
+app.use('/api', require('./Controller/Sliders/deleteSlider'));
+app.use('/api', require('./Controller/Sliders/editSlider'));
+
+
 
 app.use('/api', require('./Controller/Auth/checkPass')); 
 app.use('/api', require('./Controller/Auth/registr')); 
