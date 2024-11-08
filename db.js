@@ -1,5 +1,5 @@
-
 const mysql = require("mysql");
+const util = require("util");
 
 const pool = mysql.createPool({
     connectionLimit: 10, 
@@ -9,16 +9,21 @@ const pool = mysql.createPool({
     database: "furniture",
 });
 
+const query = util.promisify(pool.query).bind(pool);
 
-const query = (sql, values) => {
+const getConnection = () => {
     return new Promise((resolve, reject) => {
-        pool.query(sql, values, (error, results) => {
-            if (error) {
-                return reject(error); 
+        pool.getConnection((err, connection) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(connection);
             }
-            resolve(results); 
         });
     });
 };
 
-module.exports = { query }; 
+module.exports = {
+    query,
+    getConnection,
+};

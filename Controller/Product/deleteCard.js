@@ -15,6 +15,8 @@ router.delete("/deleteCard/:id", async (req, res) => {
         }
 
         const idImage = results[0].id_img;
+        const sqlDeleteOrderItems = "DELETE FROM orderitems WHERE productId = ?";
+        await query(sqlDeleteOrderItems, [id]);
 
         const sqlProduct = "DELETE FROM products WHERE id_products = ?";
         await query(sqlProduct, [id]);
@@ -33,6 +35,5 @@ router.delete("/deleteCard/:id", async (req, res) => {
         res.status(500).json({ error: "Failed to delete product" });
     }
 });
-
 
 module.exports = router;

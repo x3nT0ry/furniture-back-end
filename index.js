@@ -37,6 +37,10 @@ app.use("/api", require("./Controller/Product/headCard"));
 app.use("/api", require("./Controller/Product/moreCard"));
 app.use("/api", require("./Controller/Product/productCard"));
 
+// Підключення маршруту для отримання замовлень
+app.use("/api", require("./Controller/Cart/orders"));
+app.use("/api", require("./Controller/Cart/outOrders"));
+
 // Підключення маршруту для отримання функцій
 app.use("/api", require("./Controller/Function/sort"));
 app.use("/api", require("./Controller/Function/finder"));
