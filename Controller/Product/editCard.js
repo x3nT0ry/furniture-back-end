@@ -91,7 +91,6 @@ router.put(
                         path.basename(oldImagePath)
                     );
                     if (newImageFile) {
-                        console.log("Removing old image:", fullPath);
                         await fs.remove(fullPath); 
                     }
                 }
@@ -101,7 +100,6 @@ router.put(
                         folderName,
                         path.basename(oldImagePath)
                     );
-                    console.log("Moving new image to:", newImagePath);
                     await fs.move(newImageFile.path, newImagePath, {
                         overwrite: true,
                     }); 

@@ -21,7 +21,6 @@ router.post("/addProduct", upload.fields([{ name: "image" }, { name: "hoverImage
     try {
         const { name, price, description, additionalInfo, id_category, tables } = req.body;
 
-        console.log("Uploaded files:", req.files);
 
         const image = req.files["image"];
         const hoverImage = req.files["hoverImage"];
@@ -49,12 +48,7 @@ router.post("/addProduct", upload.fields([{ name: "image" }, { name: "hoverImage
         const image2Path = path.join(productDir, "image2", image2[0].filename);
         const image3Path = path.join(productDir, "image3", image3[0].filename);
 
-        console.log("Moving files to:", {
-            imagePath,
-            hoverImagePath,
-            image2Path,
-            image3Path
-        });
+    
 
         try {
             await Promise.all([
