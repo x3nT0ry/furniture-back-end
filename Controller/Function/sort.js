@@ -5,7 +5,7 @@ const db = require('../../db');
 router.get('/sorts', (req, res) => {
     const sort = req.query.sort;
     let query = `
-        SELECT p.id_products, p.name, p.price, p.description, p.additionalInfo, p.tables,
+        SELECT p.id_products, p.name, p.price, p.description, p.additionalInfo,
                i.image, i.hoverImage, i.image2, i.image3, c.category
         FROM products p
         LEFT JOIN image i ON p.id_img = i.id_image
@@ -16,8 +16,9 @@ router.get('/sorts', (req, res) => {
         query += ' ORDER BY p.price ASC';
     } else if (sort === 'desc') {
         query += ' ORDER BY p.price DESC';
-    } else if (sort === 'id') {
-        query += ' ORDER BY p.id_products ASC';
+    }
+    else if (sort === 'id') {
+        query += ' ORDER BY p.id_products DESC'; 
     }
 
     db.query(query, (error, results) => {

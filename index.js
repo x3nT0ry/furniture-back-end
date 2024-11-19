@@ -26,7 +26,7 @@ app.use('/api', require('./Controller/Requestion/outDatailRequest'));
 app.use('/api', require('./Controller/Requestion/newState'));
 app.use('/api', require('./Controller/Requestion/delete'));
 
-// Підключення маршруту для отримання продуктів
+// Підключення маршрутів для продуктів
 app.use("/api", require("./Controller/Product/outCard"));
 app.use("/api", require("./Controller/Product/inputCard"));
 app.use("/api", require("./Controller/Product/addCard"));
@@ -37,13 +37,16 @@ app.use("/api", require("./Controller/Product/headCard"));
 app.use("/api", require("./Controller/Product/moreCard"));
 app.use("/api", require("./Controller/Product/productCard"));
 
-// Підключення маршруту для отримання замовлень
+// Підключення маршрутів для замовлень
 app.use("/api", require("./Controller/Cart/orders"));
 app.use("/api", require("./Controller/Cart/outOrders"));
 
-// Підключення маршруту для отримання функцій
+// Підключення маршрутів для функцій
 app.use("/api", require("./Controller/Function/sort"));
 app.use("/api", require("./Controller/Function/finder"));
+
+// **Підключення маршруту для характеристик**
+app.use('/api', require('./Controller/Characteristics/NewCharacteristic'));
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {

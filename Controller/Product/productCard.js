@@ -8,7 +8,7 @@ router.get('/card/:id', async (req, res) => {
     try {
        
         const productQuery = `
-            SELECT p.id_products, p.name, p.price, p.description, p.additionalInfo, p.tables,
+            SELECT p.id_products, p.name, p.price, p.description, p.additionalInfo, 
                    i.image, i.hoverImage, c.category AS categoryName
             FROM products p
             LEFT JOIN image i ON p.id_img = i.id_image

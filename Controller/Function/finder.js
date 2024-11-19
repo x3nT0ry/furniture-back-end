@@ -6,7 +6,7 @@ router.get('/furniture/search', (req, res) => {
     const query = req.query.query;
 
     const sqlQuery = `
-        SELECT p.id_products, p.name, p.price, p.description, p.additionalInfo, p.tables,
+        SELECT p.id_products, p.name, p.price, p.description, p.additionalInfo, 
                i.image, i.hoverImage
         FROM products p
         LEFT JOIN image i ON p.id_img = i.id_image

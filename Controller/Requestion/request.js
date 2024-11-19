@@ -12,7 +12,6 @@ router.post('/requests', async (req, res) => {
     const response = await fetch(verificationUrl, { method: 'POST' });
     const verificationResult = await response.json();
    
-
     if (!verificationResult.success) {
         return res.status(400).json({ message: 'CAPTCHA verification failed.' });
     }

@@ -13,7 +13,7 @@ router.get("/photo/:id", async (req, res) => {
 
     try {
         const result = await query(
-            `SELECT p.id_products, p.name, p.price, p.description, p.additionalInfo, p.tables,
+            `SELECT p.id_products, p.name, p.price, p.description, p.additionalInfo,
                     i.image, i.hoverImage, i.image2, i.image3, c.category
              FROM products p
              LEFT JOIN image i ON p.id_img = i.id_image

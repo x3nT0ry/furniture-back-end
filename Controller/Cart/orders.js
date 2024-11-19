@@ -14,6 +14,7 @@ router.post("/orders", async (req, res) => {
         email,
         telegram,
         items,
+        paymentstatus,
     } = req.body;
 
     let connection;
@@ -42,8 +43,8 @@ router.post("/orders", async (req, res) => {
         );
 
         const orderResult = await query(
-            `INSERT INTO Orders (shippingMethod, city, department, firstName, lastName, phone, email, telegram, total) 
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            `INSERT INTO Orders (shippingMethod, city, department, firstName, lastName, phone, email, telegram, total, paymentstatus) 
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
                 shippingMethod,
                 city,
@@ -54,6 +55,7 @@ router.post("/orders", async (req, res) => {
                 email,
                 telegram,
                 total,
+                paymentstatus, 
             ]
         );
         const orderId = orderResult.insertId;

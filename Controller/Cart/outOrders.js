@@ -21,7 +21,7 @@ router.get('/outOrders', async (req, res) => {
                 OrderItems.orderId,
                 OrderItems.productId,
                 OrderItems.quantity,
-                (Products.price * OrderItems.quantity) AS total, -- Обчислення total
+                (Products.price * OrderItems.quantity) AS total,
                 Products.name AS productName,
                 Products.price AS productPrice,
                 Image.image AS productImage
